@@ -1,19 +1,25 @@
 import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Layout from "./components/Layout";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [theme,setTheme]=useState(true)
-  const Toggletheme=()=>{
-    setTheme(!theme)
-  }
+  const [theme, setTheme] = useState(true);
+  const Toggletheme = () => {
+    setTheme(!theme);
+  };
   return (
-    <div className={`flex w-screen h-screen justify-evenly ${theme ? 'bg-gray-900' : 'bg-gray-100'}`}>
-      <div className={`w-[20%] h-screen flex flex-col justify-start ${theme ? 'bg-gray-950' : 'bg-white'}`}>
-        <Navbar theme={theme} settheme={setTheme} Toggletheme={Toggletheme}/>
-      </div>
-      <div className={`w-[80%] min-h-screen flex flex-col justify-start border border-gray-500 ${theme ? 'text-white' : 'text-black'}`}>Dashboard</div>
-    </div>
+    <Layout theme={theme} setTheme={setTheme} Toggletheme={Toggletheme}>
+      <Routes>
+        <Route path="/" element={<Navigate to="/signup" />} />
+        <Route path="/signup" element={<Signup theme={theme} />} />
+        <Route path="/login" element={<Login theme={theme} />} />
+        <Route path="/dashboard" element={<Dashboard theme={theme} />} />
+      </Routes>
+    </Layout>
   );
 }
 
